@@ -3,6 +3,8 @@ import TableRow from "./TableRow";
 
 const Form = () => {
   const [rowsData, setRowsData] = useState([]);
+  const [logoSrc, setLogoSrc] = useState('');
+  const [crossDisplay, setCrossDisplay] = useState('-z-10');
 
   const deleteTableRows = (index, event) => {
     event.preventDefault();
@@ -28,18 +30,33 @@ const Form = () => {
     setRowsData(rowsInput);
   };
 
+  const imageChange = (e) => {
+    console.log("change listener", e.target.files);
+    setLogoSrc(e.target.value)
+    var tgt = e.target,
+        files = tgt.files;
+
+    if (FileReader && files && files.length) {
+      var fr = new FileReader();
+      fr.onload = function () {
+        setLogoSrc(fr.result)
+      }
+      fr.readAsDataURL(files[0]);
+  }
+  }
+
   return (
     <div className="min-h-full shadow-2xl w-full bg-white p-10">
-      <form action="#">
+      <form>
         <div className="flex justify-between items-center">
-          <div className="w-3/12">
-            <label
+          <div className="w-3/12"  onMouseOver={() => setCrossDisplay('z-10')} onMouseLeave={() => setCrossDisplay('-z-10')}>
+            {!logoSrc && <label
               htmlFor="file-upload"
               className="relative cursor-pointer rounded-md bg-white font-medium text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 hover:text-indigo-500"
             >
               <div className="mt-2 flex justify-center rounded-md border-2 border-dashed border-gray-300 px-6 pt-5 pb-6">
-                <div className="space-y-1 text-center">
-                  <svg
+                 <div className="space-y-1 text-center">
+                <svg
                     className="mx-auto h-12 w-12 text-gray-400"
                     stroke="currentColor"
                     fill="none"
@@ -59,12 +76,17 @@ const Form = () => {
                       name="file-upload"
                       type="file"
                       className="sr-only"
+                      onChange={imageChange}
                     />
                   </div>
                   <p className="text-xs text-gray-500">Add Your Logo</p>
                 </div>
               </div>
-            </label>
+            </label>}
+            {logoSrc && <div className="relative">
+              <button className={`h-8 w-8 bg-red-600 text-white absolute ${crossDisplay}`} onClick={() => setLogoSrc('')}> &times; </button>
+              <img src={logoSrc} alt="" className="cursor-pointer" />
+              </div>}
           </div>
 
           <div className="w-9/12 flex items-end flex-col">
@@ -180,19 +202,19 @@ const Form = () => {
           <table className="table-auto w-full text-left whitespace-no-wrap">
             <thead>
               <tr>
-                <th className="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 rounded-tl rounded-bl">
+                <th className="px-4 py-3 title-font tracking-wider font-medium text-sm text-white bg-gray-700 rounded-tl rounded-bl">
                   Item
                 </th>
-                <th className="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">
+                <th className="px-4 py-3 title-font tracking-wider font-medium text-white text-sm bg-gray-700">
                   Quantity
                 </th>
-                <th className="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">
+                <th className="px-4 py-3 title-font tracking-wider font-medium text-white text-sm bg-gray-700">
                   Rate
                 </th>
-                <th className="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">
+                <th className="px-4 py-3 title-font tracking-wider font-medium text-white text-sm bg-gray-700">
                   Amount
                 </th>
-                <th className="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">
+                <th className="px-4 py-3 title-font tracking-wider font-medium text-white text-sm bg-gray-700">
                   {" "}
                   <button
                     className="w-7"
