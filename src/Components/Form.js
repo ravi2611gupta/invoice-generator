@@ -1,8 +1,13 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
+import AppContext from "../Context/AppContext";
 import TableRow from "./TableRow";
 
 const Form = () => {
   const [rowsData, setRowsData] = useState([]);
+  const [amount, setAmount] = useState(0)
+
+  const context = useContext(AppContext)
+  const { currency, subtotal } = context;
 
   const deleteTableRows = (index, event) => {
     event.preventDefault();
@@ -206,6 +211,7 @@ const Form = () => {
             <tbody>
               <TableRow
                 rowsData={rowsData}
+                amount = {amount}
                 deleteTableRows={deleteTableRows}
                 handleChange={handleChange}
               />
@@ -241,7 +247,7 @@ const Form = () => {
             <div className="flex gap-3 justify-center items-center">
               <label>Subtotal</label>
               <div style={{ width: "170px" }} className="text-end">
-                $ 0.00
+                {currency} {subtotal}
               </div>
             </div>
             <div className="flex gap-3 justify-center items-center">
@@ -251,7 +257,7 @@ const Form = () => {
                 name="company-website"
                 id="company-website"
                 className="block w-full flex-1 rounded-none border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 text-end pr-3"
-                defaultValue="1"
+                defaultValue="0"
               />
             </div>
             <div className="flex gap-3 justify-center items-center">
@@ -261,7 +267,7 @@ const Form = () => {
                 name="company-website"
                 id="company-website"
                 className="block w-full flex-1 rounded-none border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 text-end pr-3"
-                defaultValue="1"
+                defaultValue="0"
               />
             </div>
             <div className="flex gap-3 justify-center items-center">
@@ -271,13 +277,13 @@ const Form = () => {
                 name="company-website"
                 id="company-website"
                 className="block w-full flex-1 rounded-none border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 text-end pr-3"
-                defaultValue="1"
+                defaultValue="0"
               />
             </div>
             <div className="flex gap-3 justify-center items-center">
               <label>Total</label>
               <div style={{ width: "170px" }} className="text-end">
-                $ 0.00
+                {currency} 0.00
               </div>
             </div>
             <div className="flex gap-3 justify-center items-center">
@@ -287,13 +293,13 @@ const Form = () => {
                 name="company-website"
                 id="company-website"
                 className="block w-full flex-1 rounded-none border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 text-end pr-3"
-                defaultValue="1"
+                defaultValue="0"
               />
             </div>
             <div className="flex gap-3 justify-center items-center">
               <label>Balance Due</label>
               <div style={{ width: "170px" }} className="text-end">
-                $ 0.00
+                {currency} 0.00
               </div>
             </div>
           </div>

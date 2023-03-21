@@ -4,18 +4,11 @@ import AppContext from "./AppContext";
 const CurrencyState = ({ children }) => {
 
     const [currency, setCurrency] = useState('USD');
+    const [subtotal, setSubtotal] = useState(0)
 
-    const changeCurrency = () => {
-        switch(currency){
-            case 'USD':
-                console.log("This is US doller.");
-            default:
-                console.log("Please choose a valid currency.");
-        }
-    }
 
     return(
-        <AppContext.Provider value={{currency}}>
+        <AppContext.Provider value={{currency, setCurrency, subtotal, setSubtotal}}>
             {children}
         </AppContext.Provider>
     )
